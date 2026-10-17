@@ -61,9 +61,9 @@ h2{font-size:clamp(1.9rem,4.5vw,2.8rem);margin-bottom:18px}
 .center{text-align:center}.center .lead{margin:auto}
 .grid2{display:grid;gap:48px;align-items:center}
 @media(min-width:860px){.grid2{grid-template-columns:1fr 1fr}}
-.photo{aspect-ratio:4/5;border-radius:200px 200px var(--r) var(--r);position:relative;overflow:hidden;
+.photo{aspect-ratio:4/5;border-radius:28px;overflow:visible!important;margin:14px 0 0 14px;position:relative;overflow:hidden;
 background:linear-gradient(160deg,#e8dcf7,#f6e3d6 55%,#d6efeb);display:grid;place-items:center;color:var(--ink2);text-align:center;font-size:.95rem;box-shadow:0 30px 60px -30px rgba(29,24,56,.35)}
-.photo::after{content:"";position:absolute;inset:14px;border:1px solid rgba(201,164,106,.6);border-radius:190px 190px 14px 14px}
+.photo::after{content:"";position:absolute;inset:-14px 14px 14px -14px;border:2px solid #7fb83a;border-radius:28px;z-index:-1}
 .ph-tag{background:rgba(255,255,255,.75);padding:8px 14px;border-radius:999px;border:1px dashed var(--gold)}
 .sig{font-family:"Frank Ruhl Libre";font-size:1.4rem;color:var(--gold);margin-top:18px}
 .what{background:linear-gradient(180deg,var(--cream),var(--sand))}
