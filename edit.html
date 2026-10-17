@@ -70,7 +70,7 @@ async function load() {
     const st = d.createElement('style');
     st.textContent = '[contenteditable]{outline:1px dashed rgba(123,79,192,.45);outline-offset:2px;border-radius:4px;cursor:text}' +
       '[contenteditable]:focus{outline:2px solid #7b4fc0;background:rgba(255,240,150,.35)}' +
-      '.reveal{opacity:1!important;transform:none!important}body{padding-bottom:110px!important;padding-top:40px}';
+      '.reveal{opacity:1!important;transform:none!important}body{padding-bottom:110px!important;padding-top:40px}.wa,.mbar{display:none!important}';
     d.head.appendChild(st);
     d.querySelectorAll('details').forEach(x => x.open = true);
     pickTargets(d).forEach(el => { el.contentEditable = 'true'; el.spellcheck = false; });
