@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>עריכת האתר</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Heebo,system-ui,sans-serif}
+#login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fbf8f3;padding:24px}
+#login form{width:100%;max-width:360px;text-align:center}
+#login h1{font-size:26px;margin:0 0 8px;color:#1d1838}#login p{color:#4a4466;margin:0 0 20px}
+input{width:100%;font-size:20px;padding:14px;border:2px solid #cfc6e0;border-radius:14px;text-align:center;font-family:inherit}
+.big{width:100%;font-size:22px;font-weight:700;padding:16px;border:0;border-radius:16px;background:#7b4fc0;color:#fff;margin-top:14px;font-family:inherit}
+.big:disabled{opacity:.6}
+#err{color:#c0392b;min-height:24px;margin-top:10px;font-weight:600}
+#editor{display:none;position:fixed;inset:0}
+#frame{width:100%;height:100%;border:0;display:block}
+#bar{position:fixed;left:0;right:0;bottom:0;z-index:10;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.96);box-shadow:0 -4px 18px rgba(0,0,0,.15);display:flex;gap:10px;align-items:center}
+#bar .big{margin:0;flex:1}#bar .big.done{background:#2e9e5b}
+#undo{flex:0 0 auto;font-size:16px;padding:16px 14px;border-radius:16px;border:2px solid #cfc6e0;background:#fff;font-family:inherit;color:#1d1838}
+#tip{position:fixed;top:0;left:0;right:0;z-index:10;background:#1d1838;color:#fff;text-align:center;padding:10px 14px calc(10px);font-size:15px}
+#tip button{background:none;border:0;color:#fff;font-size:18px;margin-inline-start:8px}
+#msg{position:fixed;left:12px;right:12px;bottom:96px;z-index:11;background:#1d1838;color:#fff;border-radius:14px;padding:14px;text-align:center;font-size:17px;display:none}
+</style>
+</head>
+<body>
+<div id="login"><form id="lf">
+  <h1>✏️ עריכת האתר</h1>
+  <p>הקלידי את הסיסמה כדי להתחיל לערוך</p>
+  <input id="pw" type="password" autocomplete="current-password" placeholder="סיסמה" required>
+  <button class="big" id="lb">כניסה</button>
+  <div id="err"></div>
+</form></div>
+
+<div id="editor">
+  <iframe id="frame" title="האתר"></iframe>
+  <div id="tip">לוחצים על כל טקסט כדי לשנות אותו, ובסוף לוחצים "שמירה" <button onclick="this.parentNode.remove()" aria-label="סגירה">✕</button></div>
+  <div id="msg"></div>
+  <div id="bar">
+    <button id="undo" type="button">ביטול שינויים</button>
+    <button class="big" id="save" type="button">💾 שמירה</button>
+  </div>
+</div>
+
+<script>
+const API = 'https://hanny-editor.ofer911.workers.dev';
+// Text elements that become editable (outermost match wins, so a paragraph is edited as one block)
+const SEL = 'h1,h2,h3,h4,p,li,figcaption,summary,label,button,footer,.logo,.kicker,.eyebrow,.trust,.sig,.stars,.placeholder-note,.meta span,.meta b,a.btn,.ph-tag';
+let original = '', dirty = false;
+const $ = id => document.getElementById(id);
+
+function pickTargets(doc) {
+  return [...doc.body.querySelectorAll(SEL)].filter(el => {
+    if (!el.textContent.trim()) return false;
+    for (let p = el.parentElement; p; p = p.parentElement) if (p.matches && p.matches(SEL)) return false;
+    return true;
+  });
+}
+function msg(t, ms) { const m = $('msg'); m.textContent = t; m.style.display = 'block'; clearTimeout(msg.t); if (ms) msg.t = setTimeout(() => m.style.display = 'none', ms); }
+
+async function load() {
+  const r = await fetch(API + '/page', { cache: 'no-store' });
+  if (!r.ok) throw new Error('טעינה נכשלה');
+  original = (await r.json()).html;
+  const f = $('frame');
+  f.onload = () => {
+    const d = f.contentDocument;
+    const st = d.createElement('style');
+    st.textContent = '[contenteditable]{outline:1px dashed rgba(123,79,192,.45);outline-offset:2px;border-radius:4px;cursor:text}' +
+      '[contenteditable]:focus{outline:2px solid #7b4fc0;background:rgba(255,240,150,.35)}' +
+      '.reveal{opacity:1!important;transform:none!important}body{padding-bottom:110px!important;padding-top:40px}';
+    d.head.appendChild(st);
+    d.querySelectorAll('details').forEach(x => x.open = true);
+    pickTargets(d).forEach(el => { el.contentEditable = 'true'; el.spellcheck = false; });
+    // No navigation / form submission / details toggling while editing
+    d.addEventListener('click', e => { if (e.target.closest('a,summary,button')) e.preventDefault(); }, true);
+    d.addEventListener('submit', e => e.preventDefault(), true);
+    d.addEventListener('input', () => { dirty = true; $('save').classList.remove('done'); $('save').textContent = '💾 שמירה'; });
+    d.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.target.closest('p,footer')) e.preventDefault(); });
+    // Paste as plain text only
+    d.addEventListener('paste', e => { e.preventDefault(); d.execCommand('insertText', false, (e.clipboardData || window.clipboardData).getData('text/plain')); });
+  };
+  f.srcdoc = original;
+}
+
+function buildHtml() {
+  const live = pickTargets($('frame').contentDocument);
+  const clean = new DOMParser().parseFromString(original, 'text/html');
+  const tgt = pickTargets(clean);
+  if (live.length !== tgt.length) throw new Error('mismatch');
+  live.forEach((el, i) => {
+    let h = el.innerHTML.replace(/<div>/g, '<br>').replace(/<\/div>/g, '').replace(/&nbsp;/g, '&nbsp;');
+    if (h !== tgt[i].innerHTML) tgt[i].innerHTML = h;
+  });
+  return '<!doctype html>\n' + clean.documentElement.outerHTML + '\n';
+}
+
+$('lf').onsubmit = async e => {
+  e.preventDefault(); $('lb').disabled = true; $('err').textContent = '';
+  try {
+    const r = await fetch(API + '/login', { method: 'POST', body: JSON.stringify({ password: $('pw').value }) });
+    if (!r.ok) throw new Error('הסיסמה לא נכונה, נסי שוב');
+    localStorage.setItem('hanny_pw', $('pw').value);
+    $('login').style.display = 'none'; $('editor').style.display = 'block';
+    await load();
+  } catch (x) { $('err').textContent = x.message.includes('fetch') ? 'אין חיבור לאינטרנט, נסי שוב' : x.message; }
+  $('lb').disabled = false;
+};
+
+$('save').onclick = async () => {
+  if (!dirty) { msg('לא שינית עדיין שום טקסט 🙂', 2500); return; }
+  const b = $('save'); b.disabled = true; b.textContent = 'שומרת...';
+  try {
+    const html = buildHtml();
+    const r = await fetch(API + '/save', { method: 'POST', body: JSON.stringify({ password: localStorage.getItem('hanny_pw'), html }) });
+    const j = await r.json();
+    if (!j.ok) throw new Error(j.error || 'השמירה נכשלה');
+    original = html; dirty = false;
+    b.classList.add('done'); b.textContent = '✔ נשמר!';
+    msg('נשמר! האתר יתעדכן תוך 1-2 דקות', 5000);
+  } catch (x) { b.textContent = '💾 שמירה'; msg('❌ השמירה לא הצליחה. נסי שוב בעוד רגע. (' + x.message + ')', 7000); }
+  b.disabled = false;
+};
+$('undo').onclick = () => { if (!dirty || confirm('לבטל את כל השינויים שלא נשמרו?')) { dirty = false; load(); } };
+addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+const saved = localStorage.getItem('hanny_pw');
+if (saved) { $('pw').value = saved; $('lf').requestSubmit(); }
+</script>
+</body>
+</html>

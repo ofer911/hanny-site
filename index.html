@@ -17,7 +17,7 @@
 {"@context":"https://schema.org","@type":"HealthAndBeautyBusiness","name":"חני – ריפוי בתדרים","description":"טיפולי תדרים וריפוי אנרגטי","areaServed":"IL","telephone":"+972-52-463-0004","email":"hannahmizrahi.arc@gmail.com","url":"https://www.hanny-tedarim.co.il/"}
 </script>
 <style>
-:root{--ink:#1d1838;--ink2:#4a4466;--cream:#fbf8f3;--sand:#f1e9de;--gold:#c9a46a;--lav:#b9a7e0;--teal:#7fc6c0;--rose:#e9b8b0;--r:22px}
+:root{--ink:#1d1838;--ink2:#4a4466;--cream:#fbf8f3;--sand:#f1e9de;--gold:#e0b100;--lav:#7b4fc0;--teal:#7fb83a;--rose:#e9b8b0;--r:22px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:Assistant,system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.75;font-size:17px;-webkit-font-smoothing:antialiased}
@@ -50,7 +50,7 @@ background:radial-gradient(120% 80% at 80% 10%,#5b4a9a 0%,transparent 55%),radia
 .hero .in{position:relative;padding:120px 22px 80px;max-width:760px}
 .eyebrow{letter-spacing:4px;font-size:.8rem;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
 .hero h1{font-size:clamp(2.3rem,7vw,4.2rem);margin-bottom:20px}
-.hero h1 em{font-style:normal;background:linear-gradient(90deg,#f4dcae,#c7b6f0,#9fe0d9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#e0b100,#7b4fc0,#7fb83a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p{font-size:1.15rem;opacity:.85;margin-bottom:34px}
 .cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 .trust{margin-top:38px;font-size:.9rem;opacity:.75}
@@ -125,7 +125,34 @@ footer{background:#15112a;color:rgba(255,255,255,.6);text-align:center;padding:3
 .reveal.on{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
-</head>
+<style>
+/* clean white variant: purple / yellow / green on white */
+:root{--ink:#4b2a7b;--ink2:#6b6380;--cream:#fff;--sand:#fff;--gold:#e0b100;--lav:#7b4fc0;--teal:#7fb83a;--rose:#e0b100}
+body{background:#fff;color:#3a3150}
+h1,h2,h3{color:#4b2a7b}
+header.solid{background:rgba(255,255,255,.94);box-shadow:0 1px 0 #eee}
+.nav{color:#4b2a7b}.logo span{color:#7fb83a}
+.hero{background:#fff;color:#3a3150}
+.hero h1{color:#4b2a7b}
+.hero h1 em{background:linear-gradient(90deg,#7b4fc0,#e0b100,#7fb83a);-webkit-background-clip:text;background-clip:text}
+.orb{background:radial-gradient(circle,rgba(224,177,0,.16),rgba(127,184,58,.08) 45%,transparent 70%)}
+.waves{opacity:.35}
+.eyebrow,.kicker{color:#7fb83a}
+.btn-gold{background:#7b4fc0;color:#fff;box-shadow:none}
+.btn-ghost{border:1px solid #7b4fc0;color:#7b4fc0}
+.what{background:#fff}
+.pill,.card,.q,details{background:#fff;box-shadow:none;border:1px solid #eee8f5}
+.card::before{background:linear-gradient(90deg,#7b4fc0,#e0b100,#7fb83a)}
+.process{background:#fff;color:#3a3150;border-block:1px solid #f0edf5}
+.process .lead,.contact .lead{color:#6b6380}
+.step h3{color:#4b2a7b}
+.step::before{border-color:#e0b100;color:#7b4fc0;box-shadow:none}
+.contact{background:#fff;color:#3a3150}
+input,select,textarea{border:1px solid #ddd5ea;background:#fff;color:#3a3150}
+footer{background:#fff;color:#8a839a;border-top:1px solid #eee}
+.mbar{background:rgba(255,255,255,.95)}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet"><style>body,input,select,textarea,.btn{font-family:"Heebo",sans-serif}h1,h2,h3,.logo,.sig,.step::before{font-family:"Varela Round",sans-serif;font-weight:500}</style></head>
 <body>
 <a class="skip" href="#main">דלג לתוכן</a>
 <header id="top"><div class="wrap nav">
@@ -140,7 +167,7 @@ footer{background:#15112a;color:rgba(255,255,255,.6);text-align:center;padding:3
 <section class="hero" aria-labelledby="h1">
   <div class="orb" aria-hidden="true"></div>
   <svg class="waves" viewBox="0 0 2400 300" preserveAspectRatio="none" aria-hidden="true">
-    <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#f4dcae"/><stop offset=".5" stop-color="#c7b6f0"/><stop offset="1" stop-color="#9fe0d9"/></linearGradient></defs>
+    <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#e0b100"/><stop offset=".5" stop-color="#7b4fc0"/><stop offset="1" stop-color="#7fb83a"/></linearGradient></defs>
     <g stroke="url(#g)">
       <path d="M0 150 Q150 60 300 150 T600 150 T900 150 T1200 150 T1500 150 T1800 150 T2100 150 T2400 150"/>
       <path d="M0 170 Q150 100 300 170 T600 170 T900 170 T1200 170 T1500 170 T1800 170 T2100 170 T2400 170" style="animation-duration:20s;opacity:.7"/>
@@ -176,9 +203,9 @@ footer{background:#15112a;color:rgba(255,255,255,.6);text-align:center;padding:3
   <h2 class="reveal">מהו ריפוי בתדרים?</h2>
   <p class="lead reveal">כל דבר ביקום רוטט, גם אנחנו. לחץ, טראומות ושגרה תובענית יכולים להוציא אותנו מהקצב הטבעי. טיפול בתדרים משתמש בצלילים, ברטטים ובעבודה אנרגטית עדינה כדי להזמין את הגוף לחזור להרמוניה, להירגע ולהתאזן.</p>
   <div class="pillars">
-    <div class="pill reveal"><svg viewBox="0 0 48 48" fill="none" stroke="#c9a46a" stroke-width="1.6"><path d="M4 24c4-10 8-10 12 0s8 10 12 0 8-10 12 0 4 5 4 5"/></svg><h3>הרגעת מערכת העצבים</h3><p>מעבר ממצב "הישרדות" למצב מנוחה, שבו הגוף יכול להתחדש.</p></div>
-    <div class="pill reveal"><svg viewBox="0 0 48 48" fill="none" stroke="#7fc6c0" stroke-width="1.6"><circle cx="24" cy="24" r="6"/><circle cx="24" cy="24" r="13"/><circle cx="24" cy="24" r="20" opacity=".5"/></svg><h3>שחרור רגשי</h3><p>פינוי מקום לעומסים ולרגשות שנתקעו, בעדינות ובלי צורך "לדבר על הכול".</p></div>
-    <div class="pill reveal"><svg viewBox="0 0 48 48" fill="none" stroke="#b9a7e0" stroke-width="1.6"><path d="M24 6v36M10 14l28 20M38 14L10 34"/><circle cx="24" cy="24" r="4"/></svg><h3>איזון ואנרגיה</h3><p>יותר חיוניות, שינה טובה יותר ותחושת חיבור לעצמך.</p></div>
+    <div class="pill reveal"><svg viewBox="0 0 48 48" fill="none" stroke="#e0b100" stroke-width="1.6"><path d="M4 24c4-10 8-10 12 0s8 10 12 0 8-10 12 0 4 5 4 5"/></svg><h3>הרגעת מערכת העצבים</h3><p>מעבר ממצב "הישרדות" למצב מנוחה, שבו הגוף יכול להתחדש.</p></div>
+    <div class="pill reveal"><svg viewBox="0 0 48 48" fill="none" stroke="#7fb83a" stroke-width="1.6"><circle cx="24" cy="24" r="6"/><circle cx="24" cy="24" r="13"/><circle cx="24" cy="24" r="20" opacity=".5"/></svg><h3>שחרור רגשי</h3><p>פינוי מקום לעומסים ולרגשות שנתקעו, בעדינות ובלי צורך "לדבר על הכול".</p></div>
+    <div class="pill reveal"><svg viewBox="0 0 48 48" fill="none" stroke="#7b4fc0" stroke-width="1.6"><path d="M24 6v36M10 14l28 20M38 14L10 34"/><circle cx="24" cy="24" r="4"/></svg><h3>איזון ואנרגיה</h3><p>יותר חיוניות, שינה טובה יותר ותחושת חיבור לעצמך.</p></div>
   </div>
 </div></section>
 
